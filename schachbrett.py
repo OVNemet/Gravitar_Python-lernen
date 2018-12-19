@@ -7,5 +7,6 @@ for feld in range(64):
 print()
 
 gewicht = 0.02 * summe / 1000 / 1000
+
 print("Wenn ein Reskorn 0,02g wiegt, wiegen die gesamten")
 print("Reiskoerner {:18,.0f} Tonnen.".format(gewicht))
