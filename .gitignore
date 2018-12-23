@@ -5,4 +5,5 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 /twitter_credentials.py
+/google_maps_credentials.py
 .__pycache__/*
