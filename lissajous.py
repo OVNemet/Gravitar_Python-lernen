@@ -4,7 +4,7 @@ import math
 from dataclasses import dataclass
 
 resolution = 1000 # Set resolution
-grids = 10 # Set grid to 5
+grids = 5 # Set grid to 5
 abstand = resolution // grids
 radius = (abstand - 20) // 2
 
@@ -46,6 +46,7 @@ class Lissajous:
         self.vertices.append(position)
 
     def show(self):
+        pygame.draw.circle(screen, (255, 255, 255), self.vertices[-1], 2)
         if len(self.vertices) > 1:
             pygame.draw.lines(screen, (255, 0, 0), False, self.vertices, 1)
 
@@ -55,8 +56,8 @@ def setup():
     for n in range(grids):
         x = n * abstand + abstand // 2
         y = abstand // 2
-        matrix[0][n] = rotor(x, y, 0.05 * n, True)
-        matrix[n][0] = rotor(y, x, 0.05 * n, False)
+        matrix[0][n] = rotor(x, y, 0.01 * n, True)
+        matrix[n][0] = rotor(y, x, 0.01 * n, False)
     for row in range(1, grids):
         for grid in range(1, grids):
             matrix[row][grid] = Lissajous([])
@@ -65,8 +66,19 @@ def draw():
     for n in range(1, grids):
         matrix[0][n].update()
         matrix[n][0].update()
-        matrix[0][n].show()
-        matrix[n][0].show()
+
+    for row in range(1, grids):
+        for grid in range(1, grids):
+            x = matrix[0][grid].dotX
+            y = matrix[row][0].dotY
+            matrix[row][grid].update([x, y])
+    
+    for row in range(grids):
+        for grid in range(grids):
+            if row == 0 and grid == 0:
+                continue
+            else:
+                matrix[row][grid].show()
 
 setup()
 
